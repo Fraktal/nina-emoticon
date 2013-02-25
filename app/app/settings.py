@@ -3,8 +3,11 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 
+import djcelery
+djcelery.setup_loader()
+
 ADMINS = (
-    # ('Your Name', 'your_email@example.com'),
+    # ('Shawn Todd Ervin', 'servin@unca.edu'),
 )
 
 MANAGERS = ADMINS
@@ -116,6 +119,7 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'emoticon.emoapp',
+    'djcelery',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:
