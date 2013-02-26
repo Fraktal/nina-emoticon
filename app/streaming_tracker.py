@@ -32,7 +32,7 @@ class StdOutListener(StreamListener):
             sys.exit(1)
         dbh = connection['tweetDB']
         assert dbh.connection == c
-        tweet_data = {"date": status.created_at, "tweet": status.text}
+        tweet_data = {"date": status.created_at, "tweet": status.text} #problem is here, why?
         dbh.tweets.insert(tweet_data, safe = True)
         print "Saved ==> : %s" %tweet_data    
 
