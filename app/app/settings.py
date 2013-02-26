@@ -1,8 +1,9 @@
 # Django settings for app project.
 
-DEBUG = True
+DEBUG = True 
 TEMPLATE_DEBUG = DEBUG
 
+import pymongo
 import djcelery
 djcelery.setup_loader()
 
