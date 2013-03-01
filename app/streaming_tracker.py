@@ -24,10 +24,24 @@ class StdOutListener(StreamListener):
     def on_status(self, status):
         # Prints the text of the tweet
        print('Tweet: ' + status.text)
-          
+
 
     def on_error(self, error):
         print error 
+
+
+    def handle_data(self, status):
+        try:
+            string_buffer = StringIO(status)
+            tweets = json.load(string_buffer)
+            db.tweet_test.save(tweets) 
+        except Exception as ex:
+            print "Exception occurred: %s" % str(ex)
+        try:
+            self.raw_tweets.insert(tweets)
+        except Exception as ex:
+            print "Exception occurred: %s" % str(ex)  
+
 
 
 
