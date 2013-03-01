@@ -14,27 +14,20 @@ CONSUMER_SECRET = credentials.CONSUMER_SECRET
 ACCESS_TOKEN = credentials.ACCESS_TOKEN
 ACCESS_TOKEN_SECRET = credentials.ACCESS_TOKEN_SECRET
 
+connection = MongoClient('localhost', 27017)
+db = connection['tweet_test']
+collection = db['tweet_test']
+
 class StdOutListener(StreamListener):
   
   
     def on_status(self, status):
         # Prints the text of the tweet
-       print('Tweet: ' + status.text)      
+       print('Tweet: ' + status.text)
+          
 
     def on_error(self, error):
         print error 
-
-    def db():
-        try:
-            c = Connection(host = "localhost", port = 27017)
-        except ConnectionFailure, e:
-            sys.stderr.write("could not connect to MongoDB: %s" % e)
-            sys.exit(1)
-        dbh = connection['tweetDB']
-        assert dbh.connection == c
-        tweet_data = {"date": status.created_at, "tweet": status.text} #problem is here, why?
-        dbh.tweets.insert(tweet_data, safe = True)
-        print "Saved ==> : %s" %tweet_data    
 
 
 
