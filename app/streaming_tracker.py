@@ -23,7 +23,8 @@ class StdOutListener(StreamListener):
   
     def on_status(self, status):
         # Prints the text of the tweet
-       print('Tweet: ' + status.text)
+       date = status.created_at.date().strftime("20%y/%m/%d") 
+       print(date + ' Tweet: ' + status.text)
 
 
     def on_error(self, error):
@@ -33,8 +34,7 @@ class StdOutListener(StreamListener):
     def handle_data(self, status):
         try:
             string_buffer = StringIO(status)
-            tweets = json.load(string_buffer)
-            db.tweet_test.save(tweets) 
+            tweets = json.load(string_buffer) 
         except Exception as ex:
             print "Exception occurred: %s" % str(ex)
         try:
