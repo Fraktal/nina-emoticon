@@ -21,7 +21,7 @@ collection = db['tweet_test']
 
 class StdOutListener(StreamListener):
   
-    
+    #tweet object
     def on_status(self, status):
        date = status.created_at.date().strftime("20%y/%m/%d") 
        """
@@ -35,9 +35,11 @@ class StdOutListener(StreamListener):
        # Prints the text of the tweet
        print(date + ' Tweet: ' + status.text)
 
-
+    
+    #error handling
     def on_error(self, error):
         print error 
+
 
     """
     This is my attempt at trying to handle the tweets. Basically, trying to get Mongo to save the 
