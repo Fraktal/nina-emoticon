@@ -2,12 +2,13 @@ from tweepy.streaming import StreamListener
 from tweepy import OAuthHandler
 from tweepy import Stream
 import pymongo
-import re
 from pymongo import MongoClient
 from pymongo import Connection 
 from pymongo.errors import ConnectionFailure
 connection = MongoClient()
 import credentials
+import re
+import json
 
  
 CONSUMER_KEY = credentials.CONSUMER_KEY
@@ -15,9 +16,9 @@ CONSUMER_SECRET = credentials.CONSUMER_SECRET
 ACCESS_TOKEN = credentials.ACCESS_TOKEN
 ACCESS_TOKEN_SECRET = credentials.ACCESS_TOKEN_SECRET
 
-connection = MongoClient('localhost', 27017)
-db = connection['tweet_test']
-collection = db['tweet_test']
+conn = pymongo.Connection('localhost', 27017)
+db = conn['rad']
+
 
 class StdOutListener(StreamListener):
   
@@ -26,7 +27,9 @@ class StdOutListener(StreamListener):
        date = status.created_at.date().strftime("20%y/%m/%d")       
        # Prints the text of the tweet
        print(date + ' Tweet: ' + status.text)
-       return status
+       data = json.loads(status)
+       db.what_up.insert = ({'name': data['user']['screen_name'],
+                            'text': data['text']})
 
     
     #error handling
@@ -40,20 +43,11 @@ class StdOutListener(StreamListener):
     Trying to figure out regex syntax for python. Semmy wants Mongo to store and index 
     the tweets by each Emoticon (the three below). Group the tweets by emoticon in the db.
     """   
-    #smiley = re.finditer("'^:\))+$'", status.text)
-    #sad = 
-    #neutral = 
+       #smiley = re.finditer("'^:\))+$'", status.text)
+       #sad = 
+       #neutral = 
 
     
-    #formatting tweets for MongoDB
-    def handle_data(self, status):
-      data = json.loads(status)
-      tweet_data = {'name': data['user']['screen_name'],
-                    'text': data['text']}
-      collection.insert(tweet_data)  
-   
-
-   
 
 
 if __name__ == '__main__':
