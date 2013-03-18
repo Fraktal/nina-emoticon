@@ -35,7 +35,7 @@ class StdOutListener(StreamListener):
     
     
     #regex for each emoticon for MongoDB
-    def emoticon(self, status):
+    #def emoticon(self, status):
     """
     Trying to figure out regex syntax for python. Semmy wants Mongo to store and index 
     the tweets by each Emoticon (the three below). Group the tweets by emoticon in the db.
@@ -47,20 +47,12 @@ class StdOutListener(StreamListener):
     
     #formatting tweets for MongoDB
     def handle_data(self, status):
-        try:
-            string_buffer = StringIO(status)
-            tweets = json.load(string_buffer)
-            i = 0
-            while True:
-              i = i + 1
-              for tweet in tweets:
-                try:
-                  print ' SAVING: "%s"' % tweet['text']
-                  collection.insert(tweet)
-                except Exception as e:
-                  print 'ERROR: %s' % e 
-        except Exception as e:
-           print "Exception occurred: %s" % str(e)
+      data = json.loads(status)
+      tweet_data = {'name': data['user']['screen_name'],
+                    'text': data['text']}
+      collection.insert(tweet_data)  
+   
+
    
 
 
