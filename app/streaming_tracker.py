@@ -23,28 +23,29 @@ class StdOutListener(StreamListener):
   
     #tweet object
     def on_status(self, status):
-       date = status.created_at.date().strftime("20%y/%m/%d") 
-       """
-       Trying to figure out regex syntax for python. Semmy wants Mongo to store and index 
-       the tweets by each Emoticon (the three below). Group the tweets by emoticon in the db.   
-       """
-       #smiley = re.finditer("'^:\))+$'", status.text)
-       #sad = 
-       #neutral = 
-       
+       date = status.created_at.date().strftime("20%y/%m/%d")       
        # Prints the text of the tweet
        print(date + ' Tweet: ' + status.text)
+       return status
 
     
     #error handling
     def on_error(self, error):
         print error 
-
-
+    
+    
+    #regex for each emoticon for MongoDB
+    def emoticon(self, status):
     """
-    This is my attempt at trying to handle the tweets. Basically, trying to get Mongo to save the 
-    tweet stream. The whole JSON object.  
-    """
+    Trying to figure out regex syntax for python. Semmy wants Mongo to store and index 
+    the tweets by each Emoticon (the three below). Group the tweets by emoticon in the db.
+    """   
+    #smiley = re.finditer("'^:\))+$'", status.text)
+    #sad = 
+    #neutral = 
+
+    
+    #formatting tweets for MongoDB
     def handle_data(self, status):
         try:
             string_buffer = StringIO(status)
