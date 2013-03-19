@@ -8,12 +8,13 @@ import credentials
 import re
 import json
 
- 
+#credentials for Twitter OAuth 
 CONSUMER_KEY = credentials.CONSUMER_KEY
 CONSUMER_SECRET = credentials.CONSUMER_SECRET
 ACCESS_TOKEN = credentials.ACCESS_TOKEN
 ACCESS_TOKEN_SECRET = credentials.ACCESS_TOKEN_SECRET
 
+#mongo connection
 conn = pymongo.Connection('localhost', 27017)
 db = conn['rad']
 
@@ -22,13 +23,15 @@ class StdOutListener(StreamListener):
   
     #tweets and MongoDB
     def on_status(self, status):
-       date = status.created_at.date().strftime("20%y/%m/%d")       
-       # Prints the text of the tweet
+       date = status.created_at.date().strftime("20%y/%m/%d") #readable date for tweets       
        print(date + ' Tweet: ' + status.text)
+       
        #regex for each emoticon
        #smiley = re.finditer("'^:\))+$'", status.text)
        #sad = 
        #neutral =   
+       
+       #JSON and Mongo
        #data = json.loads(status)
        #db.what_up.insert = ({'name': data['user']['screen_name'],
                              #'text': data['text']})
