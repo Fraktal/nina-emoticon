@@ -4,9 +4,9 @@ from tweepy import Stream
 import pymongo
 from pymongo import Connection 
 import credentials
-import simplejson as json
+import json
+import jsonpickle
 import re
-
 
 #credentials for Twitter OAuth 
 CONSUMER_KEY = credentials.CONSUMER_KEY
@@ -16,7 +16,7 @@ ACCESS_TOKEN_SECRET = credentials.ACCESS_TOKEN_SECRET
 
 #Mongo connection
 conn = pymongo.Connection('localhost', 27017)
-db = conn['rad']
+db = conn['tweetDB']
 
 
 class StdOutListener(StreamListener):
@@ -24,29 +24,11 @@ class StdOutListener(StreamListener):
     #tweets and Mongo
     def on_status(self, status):
        date = status.created_at.date().strftime("20%y/%m/%d") #readable date for tweets       
-       print(date + ' Tweet: ' + status.text)
+       # print(date + ' Tweet: ' + status.text)
+       data = json.loads(jsonpickle.encode(status))
+       print data
+       db.tweets.save({"Date": date, "tweet": data})
 
-    buffer = ""
-       
-    def on_receive(status):
-       buffer += data.strip()         
-       if (data.endswith("\r\n")):
-         if buffer:
-           on_status(buffer)
-           buffer = ""  
-  
-       #regex for each emoticon
-       #smiley = re.finditer("'^:\))+$'", status.text)
-       #sad = 
-       #neutral =   
-       
-       #JSON and Mongo
-       data = json.loads(status)
-       tweet = json.dumps(dict(data))
-       tweet_data = {"date": "date", "tweet": "tweet.text"}
-       #save tweets: date and text
-       db.what_up.save = (tweet_data)
-    
     #error handling
     def on_error(self, error):
         print error 
