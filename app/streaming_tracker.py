@@ -23,27 +23,33 @@ class StdOutListener(StreamListener):
   
     #tweets and Mongo
     def on_status(self, status):
+       
        #readable date for tweets
-       date = status.created_at.date().strftime("20%y/%m/%d")        
+       date = status.created_at.date().strftime("20%y/%m/%d") 
        
-       #pickle the BSON data into JSON
-       data = json.loads(jsonpickle.encode(status))
-       print data
+       #print text of tweets
+       print status.text       
        
-       #store the whole tweet object
-       db.tweets.save({"Date": date, "tweet": data})
-
-       """ possible way to store by emoticon
-       
-       if(regex = smiley):
+       #store the whole tweet object by emoticon
+       if re.search('(:\))', status.text):
+          data = json.loads(jsonpickle.encode(status))
           db.tweets.save({"smiley": ":)", "Date": date, "tweet": data})
-       elif(regex = sad):
+       elif re.search('(:\()', status.text):
+          data = json.loads(jsonpickle.encode(status))
           db.tweets.save({"sad": ":(", "Date": date, "tweet": data})
-       else(regex = neutral):
-          db.tweets.save({"neutral": ":|", "Date": date, "tweet": data}) 
+       else:
+          data = json.loads(jsonpickle.encode(status))
+          db.tweets.save({"neutral": ":|", "Date": date, "tweet": data})      
 
-
-       """
+    #count the number of tweets in database and print it
+    smiley_count = db.tweets.find({"smiley": ":)"}).count()
+    sad_count = db.tweets.find({"sad": ":("}).count()
+    neutral_count = db.tweets.find({"neutral": ":|"}).count()
+    total_count = db.tweets.count()
+    print "Total number of tweets: ", total_count
+    print "Smiley ", smiley_count
+    print "Sad ", sad_count
+    print "Neutral ", neutral_count
 
     #error handling
     def on_error(self, error):
