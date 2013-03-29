@@ -28,6 +28,7 @@ class StdOutListener(StreamListener):
     def on_status(self, status):
      
       try:
+        
          #readable date for tweets
          date = status.created_at.date().strftime("20%y/%m/%d") 
        
@@ -36,6 +37,7 @@ class StdOutListener(StreamListener):
        
          #store the whole tweet object by emoticon
          if re.search('(:\))', status.text):
+            #jsonpickle converts BSON to JSON 
             data = json.loads(jsonpickle.encode(status))
             db.tweets.save({"smiley": ":)", "date": date, "tweet": data})
          elif re.search('(:\()', status.text):
