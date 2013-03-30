@@ -29,7 +29,7 @@ class StdOutListener(StreamListener):
      
       try:
 
-         #readable date for tweets
+         #simplified and readable date for the tweets
          date = status.created_at.date().strftime("20%y/%m/%d") 
        
          #print text of tweets 
@@ -46,10 +46,11 @@ class StdOutListener(StreamListener):
             db.tweets.save({"sad": ":(", "date": date, "tweet": data})
 
          else:
-            db.tweets.save({"neutral": ":|", "date": date, "tweet": data})  
+            db.tweets.save({"neutral": ":|", "date": date, "tweet": data}) 
 
-      except KeyboardInterrupt:
-          print "Exiting"
+      except ConnectionFailure, e:
+          sys.stderr.write("could not connect to MongoDB: %s" % e)
+          sys.exit(1)     
                 
 
     #error handling
