@@ -35,7 +35,7 @@ class StdOutListener(StreamListener):
          #print text of tweets 
          print status.text       
 
-         #jsonpickle converts BSON to JSON 
+         #jsonpickle defines complex Python model objects and turns the objects into JSON 
          data = json.loads(jsonpickle.encode(status))
        
          #store the whole tweet object by emoticon
