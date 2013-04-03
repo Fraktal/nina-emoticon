@@ -33,14 +33,14 @@ class StdOutListener(StreamListener):
          date = status.created_at.date().strftime("20%y/%m/%d") 
        
          #print text of tweets 
-         print status.text       
+         print db.tweets.find()      
 
          #jsonpickle defines complex Python model objects and turns the objects into JSON 
          data = json.loads(jsonpickle.encode(status))
        
          #store the whole tweet object by emoticon
          if re.search('(:\))', status.text):
-            db.tweets.save({"smiley": ":)", "date": date, "tweet": data})
+            db.tweets.save({"smiley": ":)", "date": date, "tweet": data, "tweet_text": status.text})
 
          elif re.search('(:\()', status.text):
             db.tweets.save({"sad": ":(", "date": date, "tweet": data})
