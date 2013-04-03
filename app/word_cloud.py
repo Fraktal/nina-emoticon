@@ -59,7 +59,7 @@ for word, frequency in top_words:
 #saving sorted words into a pickle file to build word cloud 
 freq_word = open("cloud.pickle", "wb") 
 pickle.dump(word, freq_word)
-f.close()   
+freq_word.close()   
 
 contents = pickle.load(open('cloud.pickle', "rb")) 
 
