@@ -51,15 +51,18 @@ for word in words_gen:
 
 top_words = sorted(words.iteritems(), key=itemgetter(1), reverse=True)[:N]
 
-for word, frequency in top_words:
+for word in top_words:
 	#print " %s [%d]" % (word, frequency)
-    print word
+    word
 
 
 #saving sorted words into a pickle file to build word cloud 
-freq_word = open("cloud.pickle", "wb") 
-pickle.dump(word, freq_word)
-freq_word.close()   
+freq_word = open("cloud.pickle", "ab") 
+cloud_words = ' '.join([str(word) for word in top_words])
+pickle.dump(cloud_words, freq_word)
+freq_word.close()
+print cloud_words
+
 
 contents = pickle.load(open('cloud.pickle', "rb")) 
 
