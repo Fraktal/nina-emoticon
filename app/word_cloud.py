@@ -17,12 +17,12 @@ from operator import itemgetter
 
 
 
-#Mongo connection
+#mongo connection
 conn = pymongo.Connection('localhost', 27017)
 db = conn['tweetDB']
 
 
-#grouping tweet_text from mongo
+#group by tweet_text from mongo
 reducer = Code("""
                    function(obj, prev){
                      prev.count++;
@@ -57,17 +57,16 @@ for word in top_words:
 
 
 #saving sorted words into a pickle file to build word cloud 
-freq_word = open("cloud.pickle", "ab") 
 cloud_words = ' '.join([str(word) for word in top_words])
+freq_word = open("cloud.pickle", "ab") 
 pickle.dump(cloud_words, freq_word)
 freq_word.close()
 print cloud_words
 
 
-contents = pickle.load(open('cloud.pickle', "rb")) 
-
-
 #build word cloud
+contents = pickle.load(open('cloud.pickle', "rb"))
+
 tags = make_tags(get_tag_counts(contents), maxsize=80)
 
 create_tag_image(tags, 'tweet_data_smiley.png', size=(900, 600), fontname='Lobster')
