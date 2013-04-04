@@ -14,9 +14,6 @@ import cPickle as pickle
 import simplejson
 from string import punctuation
 from operator import itemgetter
-import re
-from collections import Counter
-
 
 
 #mongo connection
@@ -59,24 +56,25 @@ for word in top_words:
 
 
 #saving sorted words into a pickle file containing words and frequency of occurence 
-cloud_words = ' '.join([str(word) for word in top_words])
-freq_word = open("cloud.pickle", "ab") 
-pickle.dump(cloud_words, freq_word)
+freq_words= ' '.join([str(word) for word in top_words])
+freq_word = open("smiley_word.pickle", "ab") 
+pickle.dump(freq_words, freq_word)
 freq_word.close()
-#print cloud_words
+#print freq_words
 
 
 #build word cloud     
-happy_words = pickle.load(open('smiley.pickle', "rb"))
-happy_list = [happy_words]
-s = sorted(happy_list)
-content = "".join(str(s))[:4000]
+happy_words = pickle.load(open('smiley_word.pickle', "rb"))
+words = happy_words.split()
+happy_list = words 
+s = "".join(sorted(happy_list))
+content = str(s)[:1300]
 print content
-
-       
+ 
 tags = make_tags(get_tag_counts(content), maxsize=80)
 
-create_tag_image(tags, 'smiley.png', size=(900, 600), fontname='Lobster')
+create_tag_image(tags, 'smiley.png', size=(900, 600), fontname='Philosopher',
+                 background=(32, 35, 105, 255))
 
 
 #word cloud image
