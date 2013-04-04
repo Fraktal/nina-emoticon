@@ -4,7 +4,7 @@ from pytagcloud import create_tag_image, make_tags
 from pytagcloud.lang.counter import get_tag_counts
 import webbrowser
 import pymongo
-from pymongo import Connection 
+from pymongo import Connection  
 from bson import BSON
 from bson.json_util import dumps
 from bson import Code
@@ -14,6 +14,8 @@ import cPickle as pickle
 import simplejson
 from string import punctuation
 from operator import itemgetter
+import re
+from collections import Counter
 
 
 
@@ -41,7 +43,7 @@ f.close()
 
 #sorting tweet_text for top 200 most frequent words
 N = 200
-words = {}
+words = {} 
 
 words_gen = (word.strip(punctuation).lower() for line in open('smiley.pickle') 
                                              for word in line.split())
@@ -53,24 +55,29 @@ top_words = sorted(words.iteritems(), key=itemgetter(1), reverse=True)[:N]
 
 for word in top_words:
 	#print " %s [%d]" % (word, frequency)
-    word
+    word  
 
 
-#saving sorted words into a pickle file to build word cloud 
+#saving sorted words into a pickle file containing words and frequency of occurence 
 cloud_words = ' '.join([str(word) for word in top_words])
 freq_word = open("cloud.pickle", "ab") 
 pickle.dump(cloud_words, freq_word)
 freq_word.close()
-print cloud_words
+#print cloud_words
 
 
-#build word cloud
-contents = pickle.load(open('cloud.pickle', "rb"))
+#build word cloud     
+happy_words = pickle.load(open('smiley.pickle', "rb"))
+happy_list = [happy_words]
+s = sorted(happy_list)
+content = "".join(str(s))[:4000]
+print content
 
-tags = make_tags(get_tag_counts(contents), maxsize=80)
+       
+tags = make_tags(get_tag_counts(content), maxsize=80)
 
-create_tag_image(tags, 'tweet_data_smiley.png', size=(900, 600), fontname='Lobster')
+create_tag_image(tags, 'smiley.png', size=(900, 600), fontname='Lobster')
 
 
 #word cloud image
-webbrowser.open('tweet_data_smiley.png') 
+webbrowser.open('smiley.png') 
