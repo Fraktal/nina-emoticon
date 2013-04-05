@@ -84,7 +84,7 @@ top_words_smiley = sorted(word_smiley.iteritems(), key=itemgetter(1), reverse=Tr
 
 top_words_sad = sorted(word_sad.iteritems(), key=itemgetter(1), reverse=True)[:N]
 
-top_words_neutral = sorted(word_neutral.iteritems(), key=itemgetter(1), reverse=True)[:-50]
+top_words_neutral = sorted(word_neutral.iteritems(), key=itemgetter(1), reverse=True)[:N]
 
 for word in top_words_smiley:
 	#print " %s [%d]" % (word, frequency)
@@ -132,7 +132,7 @@ neutral_words = pickle.load(open('neutral_word.pickle', "rb"))
 words_neutral = neutral_words.split()
 neutral_list_neutral = words_neutral 
 u = "".join(sorted(neutral_list_neutral))
-content_neutral = str(u)[:1480]
+content_neutral = str(u)[:1250]
 print content_happy
 print content_sad
 print content_neutral
@@ -141,7 +141,7 @@ tag_smiley = make_tags(get_tag_counts(content_happy), maxsize=90)
 
 tag_sad = make_tags(get_tag_counts(content_sad), maxsize=90)
 
-tag_neutral = make_tags(get_tag_counts(content_neutral), maxsize=230)
+tag_neutral = make_tags(get_tag_counts(content_neutral), maxsize=90)
 
 create_tag_image(tag_smiley, 'smiley_emoticon.png', size=(900, 600), fontname='Philosopher',
                  background=(32, 35, 105, 255))
