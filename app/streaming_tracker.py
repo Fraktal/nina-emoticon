@@ -33,20 +33,23 @@ class StdOutListener(StreamListener):
          date = status.created_at.date().strftime("20%y/%m/%d") 
        
          #print text of tweets 
-         print db.tweets.find()      
+         #print db.tweets.find()      
 
          #jsonpickle defines complex Python model objects and turns the objects into JSON 
          data = json.loads(jsonpickle.encode(status))
        
          #store the whole tweet object by emoticon
          if re.search('(:\))', status.text):
-            db.tweets.save({"smiley": ":)", "date": date, "tweet": data, "tweet_text": status.text})
+            db.tweets.save({"smiley": ":)", "date": date, "tweet": data, 
+                            "tweet_text_smiley": status.text})
 
          elif re.search('(:\()', status.text):
-            db.tweets.save({"sad": ":(", "date": date, "tweet": data})
+            db.tweets.save({"sad": ":(", "date": date, "tweet": data,
+                            "tweet_text_sad": status.text})
 
          else:
-            db.tweets.save({"neutral": ":|", "date": date, "tweet": data}) 
+            db.tweets.save({"neutral": ":|", "date": date, "tweet": data,
+                            "tweet_text_neutral": status.text}) 
 
       except ConnectionFailure, e:
           sys.stderr.write("could not connect to MongoDB: %s" % e)
@@ -63,11 +66,18 @@ total_count = db.tweets.count()
 smiley_count = db.tweets.find({"smiley": ":)"}).count()
 sad_count = db.tweets.find({"sad": ":("}).count()
 neutral_count = db.tweets.find({"neutral": ":|"}).count()
-  
+
+print
+print "Starting connection to Twitter Streaming API....  " 
+print
+print "This is the last count from last connection in mongo: "
+
 print "Total tweets: ", total_count
 print "Smiley tweets: ", smiley_count
 print "Sad tweets: ", sad_count
 print "Neutral tweets: ", neutral_count
+print
+print "retrieving data......"
 
     
      
@@ -77,4 +87,5 @@ if __name__ == '__main__':
     auth.set_access_token(ACCESS_TOKEN,ACCESS_TOKEN_SECRET )
     stream = Stream(auth, listener)    
     stream.filter(track=[':)', ':(', ':|'])
+    
       
