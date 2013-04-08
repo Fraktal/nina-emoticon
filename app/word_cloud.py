@@ -87,7 +87,6 @@ top_words_sad = sorted(word_sad.iteritems(), key=itemgetter(1), reverse=True)[:N
 top_words_neutral = sorted(word_neutral.iteritems(), key=itemgetter(1), reverse=True)[:N]
 
 for word in top_words_smiley:
-    #print " %s [%d]" % (word, frequency)
     word  
 
 for word in top_words_sad:
