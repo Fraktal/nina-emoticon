@@ -28,7 +28,7 @@ reducer = Code("""
                    }
                    """)
 tweet_smiley_mongo = db.tweets.group(key={"tweet_text_smiley":1}, condition={}, initial={"count": 0}, 
-	                                         reduce=reducer)
+                                             reduce=reducer)
 
 tweet_sad_mongo = db.tweets.group(key={"tweet_text_sad":1}, condition={}, initial={"count": 0}, 
                                         reduce=reducer)
@@ -53,7 +53,7 @@ f_sad.close()
 f_neutral = open("neutral.pickle", "wb") 
 pickle.dump(tweet_neutral, f_neutral)
 f_neutral.close()
-#print tweet_smiley	 
+#print tweet_smiley  
 
 
 #sorting tweet_text for top 200 most frequent words
@@ -87,7 +87,7 @@ top_words_sad = sorted(word_sad.iteritems(), key=itemgetter(1), reverse=True)[:N
 top_words_neutral = sorted(word_neutral.iteritems(), key=itemgetter(1), reverse=True)[:N]
 
 for word in top_words_smiley:
-	#print " %s [%d]" % (word, frequency)
+    #print " %s [%d]" % (word, frequency)
     word  
 
 for word in top_words_sad:
@@ -132,7 +132,7 @@ neutral_words = pickle.load(open('neutral_word.pickle', "rb"))
 words_neutral = neutral_words.split()
 neutral_list_neutral = words_neutral 
 u = "".join(sorted(neutral_list_neutral))
-content_neutral = str(u)[:1300]
+content_neutral = str(u)[:1200]
 print content_happy
 print content_sad
 print content_neutral
@@ -155,4 +155,4 @@ create_tag_image(tag_neutral, 'neutral_emoticon.png', size=(900, 600), fontname=
 #word cloud image
 webbrowser.open('smiley_emoticon.png') 
 webbrowser.open('sad_emoticon.png') 
-webbrowser.open('neutral_emoticon.png') 
+webbrowser.open('neutral_emoticon.png')  
