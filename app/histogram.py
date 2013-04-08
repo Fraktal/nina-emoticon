@@ -14,6 +14,10 @@ import cPickle as pickle
 import simplejson
 from string import punctuation
 from operator import itemgetter
+from numpy.random import normal
+import matplotlib.pyplot as plt
+from numpy.random import normal
+import numpy as np
 
 
 #mongo connection
@@ -87,8 +91,8 @@ top_words_sad = sorted(word_sad.iteritems(), key=itemgetter(1), reverse=True)[:N
 top_words_neutral = sorted(word_neutral.iteritems(), key=itemgetter(1), reverse=True)[:N]
 
 for word in top_words_smiley:
-	#print " %s [%d]" % (word, frequency)
-    word  
+	word 
+     
 
 for word in top_words_sad:
     word  
@@ -96,63 +100,28 @@ for word in top_words_sad:
 for word in top_words_neutral:
     word          
 
-
 #saving sorted words into a pickle file containing words and frequency of occurence 
-freq_words_smiley= ' '.join([str(word) for word in top_words_smiley])
-freq_word_smiley = open("smiley_word.pickle", "ab") 
-pickle.dump(freq_words_smiley, freq_word_smiley)
-freq_word_smiley.close()
+import csv
+hist_smile= open("hist_smiley.csv", "wb")
+wtr= csv.writer(hist_smile)
+for word in top_words_smiley :
+    aRow= [ word, top_words_smiley]
+    wtr.writerow( aRow )
+hist_smile.close()
 
-freq_words_sad= ' '.join([str(word) for word in top_words_sad])
-freq_word_sad = open("sad_word.pickle", "ab") 
-pickle.dump(freq_words_sad, freq_word_sad)
-freq_word_sad.close()
+with open('hist_smiley.csv') as f:
+  v = np.loadtxt(f, delimiter=",", dtype='float', comments="#", skiprows=1, usecols=None)
 
-freq_words_neutral= ' '.join([str(word) for word in top_words_neutral])
-freq_word_neutral = open("neutral_word.pickle", "ab") 
-pickle.dump(freq_words_neutral, freq_word_neutral)
-freq_word_smiley.close()
-#print freq_words
+v_hist = np.ravel(v)   # 'flatten' v
+fig = plt.figure()
+ax1 = fig.add_subplot(111)
 
+n, bins, patches = ax1.hist(v_hist, bins=50, normed=1, facecolor='green')
+plt.show()  
 
-#build word cloud     
-happy_words = pickle.load(open('smiley_word.pickle', "rb"))
-words_happy = happy_words.split()
-happy_list_smiley = words_happy 
-s = "".join(sorted(happy_list_smiley))
-content_happy = str(s)[:1480]
-
-sad_words = pickle.load(open('sad_word.pickle', "rb"))
-words_sad = sad_words.split()
-sad_list_sad = words_sad 
-t = "".join(sorted(sad_list_sad))
-content_sad = str(t)[:1480]
-
-neutral_words = pickle.load(open('neutral_word.pickle', "rb"))
-words_neutral = neutral_words.split()
-neutral_list_neutral = words_neutral 
-u = "".join(sorted(neutral_list_neutral))
-content_neutral = str(u)[:1300]
-print content_happy
-print content_sad
-print content_neutral
- 
-tag_smiley = make_tags(get_tag_counts(content_happy), maxsize=90)
-
-tag_sad = make_tags(get_tag_counts(content_sad), maxsize=90)
-
-tag_neutral = make_tags(get_tag_counts(content_neutral), maxsize=40)
-
-create_tag_image(tag_smiley, 'smiley_emoticon.png', size=(900, 600), fontname='Philosopher',
-                 background=(32, 35, 105, 255))
-
-create_tag_image(tag_sad, 'sad_emoticon.png', size=(900, 600), fontname='Philosopher',
-                 background=(32, 35, 105, 255))
-
-create_tag_image(tag_neutral, 'neutral_emoticon.png', size=(900, 600), fontname='Philosopher',
-                 background=(32, 35, 105, 255))
-
-#word cloud image
-webbrowser.open('smiley_emoticon.png') 
-webbrowser.open('sad_emoticon.png') 
-webbrowser.open('neutral_emoticon.png') 
+#gaussian_numbers = normal(size=1000)
+#plt.hist(x, bins=10, normed=True, cumulative=True)
+#plt.title("Frequency Distribution of Words")
+#plt.xlabel("Words")
+#plt.ylabel("Frequency")
+#plt.show()
