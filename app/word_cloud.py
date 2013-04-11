@@ -46,11 +46,11 @@ f_smiley = open("smiley.pickle", "wb")
 pickle.dump(tweet_smiley, f_smiley)
 f_smiley.close()
 
-f_sad = open("sad.pickle", "wb") 
+f_sad = open("sad.txt", "wb") 
 pickle.dump(tweet_sad, f_sad)
 f_sad.close()
 
-f_neutral = open("neutral.pickle", "wb") 
+f_neutral = open("neutral.txt", "wb") 
 pickle.dump(tweet_neutral, f_neutral)
 f_neutral.close()
 #print tweet_smiley  
@@ -135,8 +135,10 @@ content_neutral = str(u)[:1200]
 print content_happy
 print content_sad
 print content_neutral
+
+test = open('smiley.txt', 'rb').read()
  
-tag_smiley = make_tags(get_tag_counts(content_happy), maxsize=90)
+tag_smiley = make_tags(get_tag_counts(test), maxsize=90)
 
 tag_sad = make_tags(get_tag_counts(content_sad), maxsize=90)
 

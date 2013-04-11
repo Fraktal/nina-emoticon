@@ -21,6 +21,7 @@ import nltk
 
 
 
+
 #mongo connection
 conn = pymongo.Connection('localhost', 27017)
 db = conn['tweetDB']
@@ -41,17 +42,17 @@ tweet_smiley_mongo = db.tweets.group(key={"tweet_text_smiley":1}, condition={}, 
 #saving tweet_text_emoticon to pickle file to be used in word cloud and histogram
 tweet_smiley = ' '.join([str(json.dumps(tweet["tweet_text_smiley"])) for tweet in tweet_smiley_mongo])
 
-f_smiley = open("smiley_histo.pickle", "wb") 
+f_smiley = open("smiley.txt", "wb") 
 pickle.dump(tweet_smiley, f_smiley)
 f_smiley.close()
 
 
 
 #sorting tweet_text for top 200 most frequent words             
-N = 200
+N = 2000
 word_smiley = {} 
 
-words_gen_smiley = (word.strip(punctuation).lower() for line in open('smiley_histo.pickle') 
+words_gen_smiley = (word.strip(punctuation).lower() for line in open('smiley.txt') 
                                                     for word in line.split())
 
 for word in words_gen_smiley:
@@ -59,10 +60,15 @@ for word in words_gen_smiley:
 
 top_words_smiley = sorted(word_smiley.iteritems(), key=itemgetter(1), reverse=True)[:N]
 
+freq_words_smiley= ' '.join([str(word) for word in top_words_smiley])
+freq_word_smiley = open("smiley_freqDist.csv", "wb") 
+pickle.dump(freq_words_smiley, freq_word_smiley)
+freq_word_smiley.close()
+
 
                                                   
 #creating x and y variables for histogram
-npopular = 200
+npopular = 10
 total = len(set(word_smiley))
 print total
 x = []
@@ -76,13 +82,21 @@ for pair in range(npopular):
 #matplotlib histogram plot
 fig = plt.figure()
 fig.patch.set_facecolor('darkslategrey')
-fig.patch.set_alpha(0.8)
+#fig.patch.set_alpha(0.8)
+
 
 ax = fig.add_subplot(111)
 ax.patch.set_facecolor('#625858')
-ax.patch.set_alpha(0.5)
+#ax.patch.set_alpha(0.5), 
 
-plt.hist(x, bins=200, range = (0,1000), color = 'red', histtype = 'stepfilled') 
-plt.xlabel('Frequency of Occurence: 0-1000')
-plt.ylabel('Number of Words at Each Occurence')
-plt.show()     
+plt.loglog(x,y, 'ro', color = 'y', basey=10) #linewidth = 5.0,
+plt.xlim([10**1, 10**4]) # put line 1/x in the plot to show match
+
+#plt.plot(x, y, linewidth=5.0, color='y', fillstyle = 'right')
+#plt.xlim([0, 1000])
+
+#plt.hist(x, bins=200, range = (0,500), color = 'yellow', histtype = 'stepfilled')
+plt.xlabel('Frequency of Occurence')
+plt.ylabel('Number of Words at Each Frequency')
+plt.title('SMILEY :)')
+plt.show()
