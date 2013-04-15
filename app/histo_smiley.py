@@ -38,24 +38,13 @@ reducer = Code("""
 tweet_smiley_mongo = db.tweets.group(key={"tweet_text_smiley":1}, condition={}, initial={"count": 0}, 
 	                                         reduce=reducer)
 
-
-
-#saving tweet_text_emoticon to text file to be used in word cloud and histogram
-fname ="smiley"
 tweet_smiley = ' '.join([str(json.dumps(tweet["tweet_text_smiley"])) for tweet in tweet_smiley_mongo])
-dtstr = str(datetime.now())
-dtstr = dtstr.replace(' ','_')
-dtstr = dtstr.split('.')
-fn = "%s_%s.txt"%(fname,dtstr[0])
-f = open(fn,"wb")
-pickle.dump(tweet_smiley,f)
-f.close()
 
 
 #file to for sorting top words
-f_sad = open("smiley.txt", "wb") 
-pickle.dump(tweet_smiley, f_sad)
-f_sad.close()
+f_smiley = open("smiley.txt", "wb") 
+pickle.dump(tweet_smiley, f_smiley)
+f_smiley.close()
 
 
 
@@ -72,20 +61,7 @@ for word in words_gen_smiley:
 top_words_smiley = sorted(word_smiley.iteritems(), key=itemgetter(1), reverse=True)[:N]
 
 
-
-#saving frequent words by curent time and date
-fname ="freq_words_smiley"
-freq_word_smiley = ' '.join([str(word) for word in top_words_smiley])
-dtstr = str(datetime.now())
-dtstr = dtstr.replace(' ','_')
-dtstr = dtstr.split('.')
-fn = "%s_%s.csv"%(fname,dtstr[0])
-f = open(fn,"wb")
-pickle.dump(freq_word_smiley,f)
-f.close()
-
-
-"""                                        
+                                       
 #creating x and y variables for histogram
 npopular = 1000
 total = len(set(word_smiley))
@@ -101,12 +77,12 @@ for pair in range(npopular):
 #matplotlib histogram plot
 fig = plt.figure()
 fig.patch.set_facecolor('darkslategrey')
-#fig.patch.set_alpha(0.8)
+fig.patch.set_alpha(0.8)
 
 
 ax = fig.add_subplot(111)
 ax.patch.set_facecolor('#625858')
-#ax.patch.set_alpha(0.5), 
+ax.patch.set_alpha(0.5), 
 
 plt.loglog(x,y, 'ro', color = 'y', basey=10) #linewidth = 5.0,
 plt.xlim([10**1, 10**4]) # put line 1/x in the plot to show match
@@ -119,4 +95,3 @@ plt.xlabel('Frequency of Occurence')
 plt.ylabel('Number of Words at Each Frequency')
 plt.title('SMILEY :)')
 plt.show()
-"""

@@ -67,7 +67,7 @@ freq_word_sad.close()
 
                                                   
 #creating x and y variables for histogram
-npopular = 200
+npopular = 1000
 total = len(set(word_sad))
 print total
 x = []
@@ -81,12 +81,12 @@ for pair in range(npopular):
 #matplotlib histogram plot
 fig = plt.figure()
 fig.patch.set_facecolor('darkslategrey')
-#fig.patch.set_alpha(0.8)
+fig.patch.set_alpha(0.8)
 
 
 ax = fig.add_subplot(111)
 ax.patch.set_facecolor('#625858')
-#ax.patch.set_alpha(0.5), 
+ax.patch.set_alpha(0.5), 
 
 plt.loglog(x,y, 'ro', color = 'b', basey=10) #linewidth = 5.0,
 plt.xlim([10**1, 10**4]) # put line 1/x in the plot to show match
