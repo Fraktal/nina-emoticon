@@ -1,38 +1,72 @@
-4-15-2013 11:17___________________________
 
-Total tweets:  26522
-Smiley tweets:  18573
-Sad tweets:  6451
-Neutral tweets:  1498
+                                                    DAY 2 DATA
 
-4-15-2013 16:18____________________________ ~1 hour 30 mins after Boston Marathon Explosion
+4-18-2013 14:58___________________________
 
-Total tweets:  28602
-Smiley tweets:  17681
-Sad tweets:  10163
-Neutral tweets:  758
+Total tweets:  27299
+Smiley tweets:  19511
+Sad tweets:  6977
+Neutral tweets:  811
 
-4-15-2013 16:35____________________________  
- 
-Total tweets:  28354
-Smiley tweets:  17809
-Sad tweets:  9802
-Neutral tweets:  743
+4-18-2013 15:09___________________________
 
-4-15-2013 16:50____________________________
+Total tweets:  26663
+Smiley tweets:  19076
+Sad tweets:  6840
+Neutral tweets:  747
 
-Total tweets:  29654
-Smiley tweets:  18363
-Sad tweets:  10460
-Neutral tweets:  831
+4-18-2013 15:21___________________________
 
-4-15-2013 17:02____________________________
+Total tweets:  26231
+Smiley tweets:  18790
+Sad tweets:  6694
+Neutral tweets:  747
 
-Total tweets:  30175
-Smiley tweets:  18756
-Sad tweets:  10535
-Neutral tweets:  884
+4-18-2013 15:39___________________________
 
-4-15-2013 17:____________________________
+Total tweets:  26554
+Smiley tweets:  19015
+Sad tweets:  6780
+Neutral tweets:  759
 
+4-18-2013 15:___________________________
 
+Total tweets:  26187
+Smiley tweets:  18707
+Sad tweets:  6714
+Neutral tweets:  766
+
+4-18-2013 16:02___________________________
+
+Total tweets:  26488
+Smiley tweets:  18851
+Sad tweets:  6886
+Neutral tweets:  751
+
+4-18-2013 19:57___________________________
+
+Total tweets:  27522
+Smiley tweets:  18640
+Sad tweets:  7737
+Neutral tweets:  1145
+
+4-18-2013 20:10___________________________
+
+Total tweets:  27628
+Smiley tweets:  18342
+Sad tweets:  8030
+Neutral tweets:  1256
+
+4-18-2013 20:24___________________________
+
+Total tweets:  27395
+Smiley tweets:  18301
+Sad tweets:  7875
+Neutral tweets:  1219
+
+4-18-2013 20:___________________________
+
+Total tweets:  28044
+Smiley tweets:  18609
+Sad tweets:  8230
+Neutral tweets:  1205

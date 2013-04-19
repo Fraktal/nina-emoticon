@@ -67,7 +67,7 @@ freq_word_sad.close()
 
                                                   
 #creating x and y variables for histogram
-npopular = 1000
+npopular = 100
 total = len(set(word_sad))
 print total
 x = []

@@ -39,6 +39,7 @@ class StdOutListener(StreamListener):
          if re.search('(:\))', status.text):
             db.tweets.save({"smiley": ":)", "date": date, "tweet": data, 
                             "tweet_text_smiley": status.text})
+            
 
          elif re.search('(:\()', status.text):
             db.tweets.save({"sad": ":(", "date": date, "tweet": data,
@@ -65,14 +66,14 @@ sad_count = db.tweets.find({"sad": ":("}).count()
 neutral_count = db.tweets.find({"neutral": ":|"}).count()
 
 print
-print "Starting connection to Twitter Streaming API....  " 
+print "  ========================== Connected to Twitter Streaming API======================  " 
 print
-print "This is the last count from last connection in mongo: "
-
-print "Total tweets: ", total_count
-print "Smiley tweets: ", smiley_count
-print "Sad tweets: ", sad_count
-print "Neutral tweets: ", neutral_count
+print "Previous count in mongo: "
+print
+print "   Total tweets: ", total_count
+print "   Smiley tweets: ", smiley_count
+print "   Sad tweets: ", sad_count
+print "   Neutral tweets: ", neutral_count
 print
 print "retrieving data......"
 
