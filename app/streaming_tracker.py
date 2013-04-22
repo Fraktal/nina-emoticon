@@ -66,7 +66,7 @@ sad_count = db.tweets.find({"sad": ":("}).count()
 neutral_count = db.tweets.find({"neutral": ":|"}).count()
 
 print
-print "  ========================== Connected to Twitter Streaming API======================  " 
+print "  ========================== Connected to Twitter Streaming API =========================  " 
 print
 print "Previous count in mongo: "
 print
