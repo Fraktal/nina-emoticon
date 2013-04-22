@@ -25,8 +25,8 @@ db = conn['tweetDB']
 class StdOutListener(StreamListener):
   
     #tweets and Mongo
-    def on_status(self, status):
-     
+    def on_status(self, status):  
+      #print status.place
       try:
 
          #simplified and readable date for the tweets
@@ -38,16 +38,16 @@ class StdOutListener(StreamListener):
          #store the whole tweet object by emoticon
          if re.search('(:\))', status.text):
             db.tweets.save({"smiley": ":)", "date": date, "tweet": data, 
-                            "tweet_text_smiley": status.text})
+                            "tweet_text_smiley": status.text, "location_smiley": status.place})
             
 
          elif re.search('(:\()', status.text):
             db.tweets.save({"sad": ":(", "date": date, "tweet": data,
-                            "tweet_text_sad": status.text})
+                            "tweet_text_sad": status.text, "location_sad": status.place})
 
          else:
             db.tweets.save({"neutral": ":|", "date": date, "tweet": data,
-                            "tweet_text_neutral": status.text}) 
+                            "tweet_text_neutral": status.text, "location_neautral": status.place}) 
 
       except ConnectionFailure, e:
           sys.stderr.write("could not connect to MongoDB: %s" % e)

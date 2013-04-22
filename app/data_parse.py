@@ -1,7 +1,7 @@
 #! /usr/bin/python
 
 import sys, time
-import webbrowser
+import webbrowser 
 import pymongo
 from pymongo import Connection  
 from bson import BSON
@@ -34,20 +34,21 @@ reducer = Code("""
                      prev.count++;
                    }
                    """)
-tweet_smiley_mongo = db.tweets.group(key={"tweet_text_smiley":1}, condition={}, initial={"count": 0}, 
-	                                         reduce=reducer)
+tweet_smiley_mongo = db.tweets.group(key={"tweet_text_smiley":1, "location_smiley":1}, condition={}, 
+                                           initial={"count": 0}, reduce=reducer)
 
-tweet_sad_mongo = db.tweets.group(key={"tweet_text_sad":1}, condition={}, initial={"count": 0}, 
-	                                         reduce=reducer)
+tweet_sad_mongo = db.tweets.group(key={"tweet_text_sad":1, "location_sad":1}, condition={}, 
+                                        initial={"count": 0}, reduce=reducer)
 
-tweet_neutral_mongo = db.tweets.group(key={"tweet_text_neutral":1}, condition={}, initial={"count": 0}, 
-	                                         reduce=reducer)
+tweet_neutral_mongo = db.tweets.group(key={"tweet_text_neutral":1, "location_neutral":1}, condition={},
+                                            initial={"count": 0},reduce=reducer)
 
 
 
 #saving tweet_text_emoticon to text file to be used in word cloud and graphs
 fname ="smiley"
-tweet_smiley = ' '.join([str(json.dumps(tweet["tweet_text_smiley"])) for tweet in tweet_smiley_mongo])
+tweet_smiley = ' '.join([str(json.dumps(tweet["tweet_text_smiley"], tweet["location_smiley"])) 
+                             for tweet in tweet_smiley_mongo])
 dtstr = str(datetime.now())
 dtstr = dtstr.replace(' ','_')
 dtstr = dtstr.split('.')
@@ -57,7 +58,8 @@ pickle.dump(tweet_smiley,f)
 f.close()
 
 fname ="sad"
-tweet_sad = ' '.join([str(json.dumps(tweet["tweet_text_sad"])) for tweet in tweet_sad_mongo])
+tweet_sad = ' '.join([str(json.dumps(tweet["tweet_text_sad"], tweet["location_sad"])) 
+                          for tweet in tweet_sad_mongo])
 dtstr = str(datetime.now())
 dtstr = dtstr.replace(' ','_')
 dtstr = dtstr.split('.')
@@ -67,7 +69,8 @@ pickle.dump(tweet_sad,f)
 f.close()
 
 fname ="neutral"
-tweet_neutral = ' '.join([str(json.dumps(tweet["tweet_text_neutral"])) for tweet in tweet_neutral_mongo])
+tweet_neutral = ' '.join([str(json.dumps(tweet["tweet_text_neutral"], tweet["location_neutral"])) 
+                              for tweet in tweet_neutral_mongo])
 dtstr = str(datetime.now())
 dtstr = dtstr.replace(' ','_')
 dtstr = dtstr.split('.')
