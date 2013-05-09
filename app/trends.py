@@ -9,12 +9,10 @@ import twitter
 
 t = twitter.Twitter(domain='api.twitter.com', api_version='1')
 
-if not os.path.isdir('out/trends_data'):
-        os.makedirs('out/trends_data')
+if not os.path.isdir('data/trends_data'):
+        os.makedirs('data/trends_data')
 
 while True:
-
-    #now = str(datetime.datetime.now())
     
     fname = "trends"
     dtstr = str(datetime.datetime.now())
@@ -24,11 +22,11 @@ while True:
 
     trends = json.dumps(t.trends._(1)(), indent=1)
 
-    f = open(os.path.join(os.getcwd(), 'out', 'trends_data', fn), 'w')
+    f = open(os.path.join(os.getcwd(), 'data', 'trends_data', fn), 'w')
     f.write(trends)
     f.close()
 
     print >> sys.stderr, "Wrote data file", f.name
     print >> sys.stderr, "Zzz..."
 
-    time.sleep(60) # 60 seconds
+    time.sleep(3600) # 1 hour between captures

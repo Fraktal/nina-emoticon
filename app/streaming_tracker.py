@@ -85,5 +85,3 @@ if __name__ == '__main__':
     auth.set_access_token(ACCESS_TOKEN,ACCESS_TOKEN_SECRET )
     stream = Stream(auth, listener)    
     stream.filter(track=[':)', ':(', ':|'])
-    
-      
