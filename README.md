@@ -18,8 +18,9 @@ To install **nina-emoticon** via git open terminal. Once you have terminal open,
     
     git clone git@github.com:Fraktal/nina-emoticon.git
 
-That should do it. To collect tweets contianing emoticons, type command 
+That should do it. To collect tweets contianing emoticons, type commands 
 
+    cd nina-emoticon/app/
     python streaming_tracker.py   
 
 
