@@ -2,10 +2,12 @@
 
 import os
 import sys
-import datetime
+import datetime 
+from datetime import timedelta
 import time
 import json
 import twitter 
+from time import strftime
 
 t = twitter.Twitter(domain='api.twitter.com', api_version='1')
 
@@ -26,7 +28,9 @@ while True:
     f.write(trends)
     f.close()
 
-    print >> sys.stderr, "Wrote data file", f.name
-    print >> sys.stderr, "Zzz..."
+    update_time = (datetime.datetime.now() + datetime.timedelta(hours=+1)).strftime("%H:%M:%S")
+
+    print >> sys.stderr, "file created: ", f.name
+    print >> sys.stderr, "Next update: ", update_time
 
     time.sleep(3600) # 1 hour between captures

@@ -75,7 +75,7 @@ print "   Smiley tweets: ", smiley_count
 print "   Sad tweets: ", sad_count
 print "   Neutral tweets: ", neutral_count
 print
-print "retrieving data......"
+
 
     
      
@@ -83,5 +83,7 @@ if __name__ == '__main__':
     listener = StdOutListener()
     auth = OAuthHandler(CONSUMER_KEY, CONSUMER_SECRET)
     auth.set_access_token(ACCESS_TOKEN,ACCESS_TOKEN_SECRET )
+    print >> sys.stderr,"retrieving data......"
     stream = Stream(auth, listener)    
     stream.filter(track=[':)', ':(', ':|'])
+    
