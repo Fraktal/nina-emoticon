@@ -34,18 +34,18 @@ reducer = Code("""
                      prev.count++;
                    }
                    """)
-tweet_smiley_mongo = db.tweets.group(key={"tweet_text_smiley":1, "location_smiley":1}, condition={}, 
-                                           initial={"count": 0}, reduce=reducer)
+tweet_smiley_mongo = db.tweets.group(key={"tweet_text_smiley":1, "location_smiley":1}, 
+                                          condition={}, initial={"count": 0}, reduce=reducer)
 
-tweet_sad_mongo = db.tweets.group(key={"tweet_text_sad":1, "location_sad":1}, condition={}, 
-                                        initial={"count": 0}, reduce=reducer)
+tweet_sad_mongo = db.tweets.group(key={"tweet_text_sad":1, "location_sad":1}, 
+                                       condition={}, initial={"count": 0}, reduce=reducer)
 
-tweet_neutral_mongo = db.tweets.group(key={"tweet_text_neutral":1, "location_neutral":1}, condition={},
-                                            initial={"count": 0},reduce=reducer)
+tweet_neutral_mongo = db.tweets.group(key={"tweet_text_neutral":1, "location_neutral":1}, 
+                                           condition={}, initial={"count": 0},reduce=reducer)
 
 
 
-#saving tweet_text_emoticon to text file to be used in word cloud and graphs
+`#saving tweet_text_emoticon to text file to be used in word cloud and graphs
 fname ="smiley"
 tweet_smiley = ' '.join([str(json.dumps(tweet["tweet_text_smiley"], tweet["location_smiley"])) 
                              for tweet in tweet_smiley_mongo])

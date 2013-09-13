@@ -9,6 +9,7 @@ import sys
 import credentials
 import json
 import jsonpickle
+import logging
 import re
 
 #credentials for Twitter OAuth 
@@ -26,7 +27,7 @@ class StdOutListener(StreamListener):
   
     #tweets and Mongo
     def on_status(self, status):  
-      #print status.place
+      #print status
       try:
 
          #simplified and readable date for the tweets
@@ -49,8 +50,8 @@ class StdOutListener(StreamListener):
             db.tweets.save({"neutral": ":|", "date": date, "tweet": data,
                             "tweet_text_neutral": status.text, "location_neautral": status.place}) 
 
-      except ConnectionFailure, e:
-          sys.stderr.write("could not connect to MongoDB: %s" % e)
+      except ConnectionFailure, error:
+          sys.stderr.write("could not connect to MongoDB: %s" % error)
           sys.exit(1)     
                 
 
@@ -85,5 +86,5 @@ if __name__ == '__main__':
     auth.set_access_token(ACCESS_TOKEN,ACCESS_TOKEN_SECRET )
     print >> sys.stderr,"retrieving data......"
     stream = Stream(auth, listener)    
-    stream.filter(track=[':)', ':(', ':|'])
+    stream.filter(track=[':)', ':('])
     
