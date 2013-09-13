@@ -7,6 +7,7 @@ The **nina-emoticon** project is a sentiment analysis web app using machine lear
 This code is being developed by the NINA Lab at the **University of North Carolina Asheville**. This application
 is in development. Please be aware of this as you look at the code. 
 
+**The lab has been closed due to professor relocation. Project is continued under Sentinet using neural networks for sentiment analysis**
 
 
 Installation  
